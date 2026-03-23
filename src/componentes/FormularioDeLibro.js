@@ -52,32 +52,32 @@ function FormularioDeLibro(props) {
     setErrorMsg(errorMsg);
   }
 
-  function handleInputChange(event) {
-    const { nombre, valor } = event.target;
-    switch (nombre) {
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
       case "cantidad":
-        if (valor === "" || parseInt(valor) === +valor) {
-          setLibro((prevState) => ({
-            ...prevState,
-            [nombre]: valor,
+        if (value === "" || parseInt(value) === +value) {
+          setLibro((libro) => ({
+            ...libro,
+            [name]: value,
           }));
         }
         break;
       case "precio":
-        if (valor === "" || valor.match(/^\d{1,}(\.\d{0,2})?&/)) {
-          setLibro((prevState) => ({
-            ...prevState,
-            [nombre]: valor,
+        if (value === "" || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
+          setLibro((libro) => ({
+            ...libro,
+            [name]: value,
           }));
         }
         break;
       default:
-        setLibro((prevState) => ({
-          ...prevState,
-          [nombre]: valor,
+        setLibro((libro) => ({
+          ...libro,
+          [name]: value,
         }));
     }
-  }
+  };
 
   return (
     <div className="main-form">
