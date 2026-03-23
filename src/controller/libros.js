@@ -1,64 +1,63 @@
-const testdb = require("./init_couch");
+const testdb = require("./db");
 
-function add(user) {
-  return testdb.insert(user);
-  return inserted;
+async function add(user) {
+  try {
+    const result = await testdb.insert(user);
+    return result;
+  } catch (err) {
+    return err;
+  }
 }
 
-function getAll() {
-  return testdb.list();
+async function getAll() {
+  try {
+    const result = await testdb.list();
+    return result;
+  } catch (err) {
+    return err;
+  }
 }
 
-let user = {
-  email: "cfrediani@example.com",
-  name: "Cesare Frediani",
-  address: "quello di sempre, 1",
-};
-
-async function a(user) {
-  const conferma = await add(user);
-  return conferma.json();
+async function findOne(qry) {
+  // il valore qry deve essere un json.
+  //es: {name: 'cesare frediani' }
+  try {
+    const result = await testdb.find({
+      selector: qry,
+      limit: 1,
+    });
+    return result;
+  } catch (err) {
+    return err;
+  }
 }
 
-a();
+async function deleteOne(qry) {
+  // il valore qry deve essere un json.
+  //es: {name: 'cesare frediani' }
+  try {
+    let result = await findOne(qry);
+    console.log("Risultato Ricerca: ", result);
+    if (result.docs.length === 0) {
+      console.log("Documento non trovato");
+      return false;
+    }
+    const doc = result.docs[0];
+    result = await testdb.destroy(doc._id, doc._rev);
+    return true;
+  } catch (err) {
+    return false;
+  }
+}
 
-// // Create a document
-// app.post("/documents", async (req, res) => {
-//   try {
-//     const body = req.body;
-//     const response = await db.insert(body);
-//     res.status(201).send(response);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
-// // Read a document
-// app.get("/documents/:id", async (req, res) => {
-//   try {
-//     const document = await db.get(req.params.id);
-//     res.status(200).send(document);
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// });
-// // Update a document
-// app.put("/documents/:id", async (req, res) => {
-//   try {
-//     const document = await db.get(req.params.id);
-//     const updatedDocument = { ...document, ...req.body };
-//     const response = await db.insert(updatedDocument);
-//     res.status(200).send(response);
-//   } catch (error) {
-//     res.status(500).send(error);
-//   }
-// });
-// // Delete a document
-// app.delete("/documents/:id", async (req, res) => {
-//   try {
-//     const document = await db.get(req.params.id);
-//     await db.destroy(document._id, document._rev);
-//     res.status(204).send();
-//   } catch (error) {
-//     res.status(404).send(error);
-//   }
-// });
+module.exports = { add, getAll, findOne, deleteOne };
+
+// let user = {
+//   email: "cfrediani@example.com",
+//   name: "Cesare Frediani",
+//   address: "quello di sempre, 1",
+// };
+// let user = { name: "Cesare Frediani" };
+
+// const conferma = deleteOne(user);
+// console.log(conferma);
