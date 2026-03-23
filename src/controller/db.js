@@ -8,6 +8,10 @@ const dbUser = process.env.DB_USER;
 const dbUserPwd = process.env.DB_USER_PASSWORD;
 const dbName = process.env.DB_NAME;
 
-module.exports = nano(
+const db = nano(
   `http://${dbAdmin}:${dbAdminPwd}@${dbUrl}` || "http://127.0.0.1:5984",
 );
+
+const tabla = db.use(dbName);
+
+module.exports = tabla;
