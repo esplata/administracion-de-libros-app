@@ -1,0 +1,8 @@
+DB_URL='192.168.15.21:5984'
+DB_ADMIN='admin'
+DB_ADMIN_PASSWORD='casaspagna2013'
+DB_USER='testuser'
+DB_USER_PASSWORD='testuser'
+DB_NAME='testdb'
+
+
