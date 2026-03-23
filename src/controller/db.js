@@ -1,12 +1,13 @@
 require("dotenv").config();
+const nano = require("nano");
 
+const dbAdmin = process.env.DB_ADMIN;
+const dbAdminPwd = process.env.DB_ADMIN_PASSWORD;
 const dbUrl = process.env.DB_URL;
 const dbUser = process.env.DB_USER;
-const dbUserPswd = process.env.DB_USER_PASSWORD;
+const dbUserPwd = process.env.DB_USER_PASSWORD;
 const dbName = process.env.DB_NAME;
 
-const nano = require("nano")({
-  url: { dbUrl },
-});
-const dbLavoro = nano.db.use({ dbName });
-await nano.auth({ dbUser }, { dbUserPswd });
+module.exports = nano(
+  `http://${dbAdmin}:${dbAdminPwd}@${dbUrl}` || "http://127.0.0.1:5984",
+);
