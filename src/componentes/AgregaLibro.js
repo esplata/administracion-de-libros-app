@@ -4,6 +4,7 @@ import FormularioDeLibro from "./FormularioDeLibro";
 function AgregaLibro() {
   function handleOnSubmit(libro) {
     console.log(libro);
+    console.log("Adesso dovresti scriverlo nel database Couch");
   }
 
   return (
