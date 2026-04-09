@@ -1,21 +1,28 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import "../css/base.css";
 
 function Header() {
   return (
     <header>
+      <title>Administracion de Libros</title>
       <h1>Application de Administracion de Libros</h1>
       <hr />
-      <nav>
-        <ul>
+      <nav className="barranavigazione">
+        <ul className="horizontal-menu">
           <li>
-            <NavLink to="/lista" className="link" activeclassname="active">
-              Lista de Libros
-            </NavLink>
+            <Navlink to="/" className="link" activeclassname="active">
+              Home
+            </Navlink>
           </li>
           <li>
             <NavLink to="/add" className="link" activeclassname="active">
               Agrega Libro
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/lista" className="link" activeclassname="active">
+              Lista de Libros
             </NavLink>
           </li>
         </ul>
@@ -26,19 +33,3 @@ function Header() {
 }
 
 export default Header;
-
-/*
-    <header>
-      <h1>Application de Administracion de Libros</h1>
-      <hr />
-      <div className="links">
-        <NavLink to="/" className="link" activeclassname="active">
-          Lista de Libros
-        </NavLink>
-        <NavLink to="/add" className="link" activeclassname="active">
-          Agrega Libro
-        </NavLink>
-      </div>
-    </header>
-
-*/
