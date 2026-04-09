@@ -1,0 +1,36 @@
+.barranavigazione {
+  margin-top: 0.3%;
+  border: 5px;
+  border-color: blueviolet;
+  background-color: bisque;
+  padding: 2px;
+}
+.horizontal-menu {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+.horizontal-menu li {
+  display: inline;
+  margin-right: 1%;
+  color: cadetblue;
+}
+.horizontal-menu li:hover {
+  background-color: cadetblue;
+  color: black;
+}
+
+.formulario {
+  margin-top: 1%;
+  border: 5px;
+  border-color: blueviolet;
+  border-style: double;
+  padding: 2px;
+  width: 30%;
+}
+.subform {
+  padding: 5px;
+}
+.bottone:hover {
+  color: aquamarine;
+}
