@@ -1,10 +1,14 @@
 import React from "react";
-import AppRouter from "./router/AppRouter";
+import Main from "./router/main";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
 
 function App() {
-  return <AppRouter />;
+  return (
+    <div className="App">
+      <Main />;
+    </div>
+  );
 }
 
 export default App;
