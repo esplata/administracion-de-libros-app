@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import "../css/base.css";
 
 function Header() {
@@ -11,9 +11,9 @@ function Header() {
       <nav className="barranavigazione">
         <ul className="horizontal-menu">
           <li>
-            <Navlink to="/" className="link" activeclassname="active">
+            <NavLink to="/" className="link" activeclassname="active">
               Home
-            </Navlink>
+            </NavLink>
           </li>
           <li>
             <NavLink to="/add" className="link" activeclassname="active">

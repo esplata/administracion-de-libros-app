@@ -1,5 +1,5 @@
 import React from "react";
-import Main from "./router/main";
+import Main from "./router/Main";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./styles.scss";
 

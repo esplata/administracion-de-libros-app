@@ -1,6 +1,8 @@
 import React from "react";
 import FormularioDeLibro from "./FormularioDeLibro";
 import Header from "./Header";
+
+// const tabla = require("../controller/db");
 const libros = require("../controller/libros");
 
 function AgregaLibro() {
