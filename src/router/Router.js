@@ -5,6 +5,19 @@ import AgregaLibro from "../componentes/AgregaLibro";
 import InsertLibro from "../componentes/InsertLibro";
 import ListaDeLibros from "../componentes/ListaDeLibros";
 import ErrorPage from "../componentes/ErrorPage";
+import FormTest from "../componentes/FormTest";
+
+async function actionSubmit({ params, request }) {
+  try {
+    const formData = await request.formData();
+    const num = formData.num;
+    console.log("dati ricevuti:", num);
+  } catch (e) {
+    console.log("errore:", e);
+  }
+
+  //const { id, nombrelibro, autor, precio, cantidad, fecha } = formData;
+}
 
 const router = createBrowserRouter([
   {
@@ -18,23 +31,14 @@ const router = createBrowserRouter([
   },
   {
     path: "/add",
-    Component: InsertLibro,
-  },
-  {
-    path: "/action",
     children: [
       {
+        path: "form",
+        Component: FormTest,
+      },
+      {
         path: "submit",
-        lazy: async () => {
-          const [compModule, actionModule] = await Promise.all([
-            import("../componentes/ActionSubmit"),
-            import("../componentes/ScriviLibro"),
-          ]);
-          return {
-            Component: compModule.default,
-            action: actionModule.default,
-          };
-        },
+        action: actionSubmit,
       },
     ],
   },

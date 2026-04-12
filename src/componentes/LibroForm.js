@@ -30,6 +30,9 @@ export default function LibroForm() {
   }
   initialLibro.fecha = giorno + "/" + mese + "/" + d.getFullYear().toString();
 
+  // TODO: Crea un gestore del saubmit, nel quale scrivi i valori nel database e ritorni alla pagina principale,
+  // TODO: se tutto é andato bene, altrimenti ritorni il messaggio di errore...
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setStatoLibro((prev) => ({
@@ -67,7 +70,7 @@ export default function LibroForm() {
   // };
 
   return (
-    <Form action="/action/submit" metod="post">
+    <Form action="/add/submit" metod="post">
       <label htmlFor="nombrelibro">Nombre del libro:</label>
       <input
         type="text"
