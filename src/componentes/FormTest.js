@@ -1,16 +1,27 @@
 import React, { useState } from "react";
-import { useNavigation, useSubmit } from "react-router-dom";
+import {  useNavigation, useSubmit } from "react-router-dom";
 import { Form } from "react-router";
 
 export default function FormTest() {
   const [value, setValue] = useState(0);
 
-  function onSubmitAction(e) {
-    e.preventDefault();
-    console.log(value);
+//   function onSubmitAction(e) {
+//     e.preventDefault();
+//     console.log(value);
+//   }
+
+  function onSubmitAction(event: React.FormEvent) {
+
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formValue = Object.fromEntries(formData)
+
+    console.log(formValue);
+
   }
 
-  function handleChange(e) {
+
+function handleChange(e) {
     setValue(e.target.value);
   }
 
