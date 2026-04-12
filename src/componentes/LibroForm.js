@@ -1,8 +1,13 @@
 import React, { useState } from "react";
-import { Form, useNavigation, useSubmit } from "react-router-dom";
+import { Form, useNavigate, useNavigation, useSubmit } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 
+const libros = require("../controller/libros");
+
+
 export default function LibroForm() {
+    const navigate = useNavigate();
+
   // definiamo il oggetto libro
   const d = new Date();
   const initialLibro = {
@@ -30,8 +35,23 @@ export default function LibroForm() {
   }
   initialLibro.fecha = giorno + "/" + mese + "/" + d.getFullYear().toString();
 
-  // TODO: Crea un gestore del saubmit, nel quale scrivi i valori nel database e ritorni alla pagina principale,
+  // TODO: Crea un gestore del submit, nel quale scrivi i valori nel database e ritorni alla pagina principale,
   // TODO: se tutto é andato bene, altrimenti ritorni il messaggio di errore...
+  function onSubmitAction(event: React.FormEvent) {
+    
+
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const formValue = Object.fromEntries(formData)
+    console.log(formValue);
+    try{
+
+    } catch (e){
+      
+    }
+
+  }
+
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -70,7 +90,7 @@ export default function LibroForm() {
   // };
 
   return (
-    <Form action="/add/submit" metod="post">
+    <Form onSubmit={onSubmitAction}>
       <label htmlFor="nombrelibro">Nombre del libro:</label>
       <input
         type="text"
