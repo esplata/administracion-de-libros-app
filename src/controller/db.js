@@ -17,7 +17,7 @@ const {
 //   `http://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@${process.env.DB_URL}/${process.env.DB_NAME}`,
 // );
 const db = new PouchDB(
-  "http://admin:Casaspagna2013@$192.168.15:21:5984/testdb",
+  "http://admin:casaspagna2013@$192.168.15:21:5984/testdb",
 );
 
 // const db = nano(
