@@ -1,15 +1,11 @@
+import genDate from "../utils/genDate";
 import React, { useState } from "react";
-import { Form, useNavigate, useNavigation, useSubmit } from "react-router-dom";
+import { Form } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
-
 const libros = require("../controller/libros");
 
-
 export default function LibroForm() {
-    const navigate = useNavigate();
-
   // definiamo il oggetto libro
-  const d = new Date();
   const initialLibro = {
     id: uuidv4(),
     nombrelibro: "",
@@ -18,40 +14,40 @@ export default function LibroForm() {
     cantidad: 0,
     fecha: 0,
   };
-  //  const submit = useSubmit();
   const [statoLibro, setStatoLibro] = useState(initialLibro);
 
-  let giorno, mese;
+  initialLibro.fecha = genDate();
 
-  if (d.getDate() < 10) {
-    giorno = "0" + d.getDate().toString();
-  } else {
-    giorno = d.getDate().toString();
-  }
-  if (d.getMonth() < 10) {
-    mese = "0" + d.getMonth().toString();
-  } else {
-    mese = d.getMonth().toString();
-  }
-  initialLibro.fecha = giorno + "/" + mese + "/" + d.getFullYear().toString();
+  async function scriviDati(data) {
+    //TODO: Devi aggiungere un campo: il campo che definisce la "tabella" --> "type": "libri".
+    let ritorno;
 
-  // TODO: Crea un gestore del submit, nel quale scrivi i valori nel database e ritorni alla pagina principale,
-  // TODO: se tutto é andato bene, altrimenti ritorni il messaggio di errore...
-  function onSubmitAction(event: React.FormEvent) {
-    
-
-    event.preventDefault();
-    const formData = new FormData(event.target);
-    const formValue = Object.fromEntries(formData)
-    console.log(formValue);
-    try{
-
-    } catch (e){
-      
+    try {
+      const result = await libros.add(data);
+      ritorno = await result;
+      if (ritorno.ok) {
+        ritorno = true;
+      }
+    } catch (error) {
+      ritorno = error;
     }
-
+    return ritorno;
   }
 
+  function onSubmitAction(e) {
+    let risultato;
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const formValue = Object.fromEntries(formData);
+    console.log(formValue);
+    try {
+      risultato = scriviDati(formValue);
+    } catch (e) {
+      risultato = e;
+    }
+    console.log("il valore di ritorno riportato é: ", risultato);
+    setStatoLibro(initialLibro);
+  }
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -91,39 +87,63 @@ export default function LibroForm() {
 
   return (
     <Form onSubmit={onSubmitAction}>
-      <label htmlFor="nombrelibro">Nombre del libro:</label>
-      <input
-        type="text"
-        id="nombrelibro"
-        name="nombrelibro"
-        value={nombrelibro}
-        onChange={handleInputChange}
-      ></input>
-      <label htmlFor="autor">Autor:</label>
-      <input
-        type="text"
-        id="autor"
-        name="autor"
-        value={autor}
-        onChange={handleInputChange}
-      ></input>
-      <label htmlFor="precio">Precio:</label>
-      <input
-        type="number"
-        id="precio"
-        name="precio"
-        value={precio}
-        onChange={handleInputChange}
-      ></input>
-      <label htmlFor="cantidad">Cantidad:</label>
-      <input
-        type="number"
-        id="cantidad"
-        name="cantidad"
-        value={cantidad}
-        onChange={handleInputChange}
-      ></input>
-      <label>Fecha : {fecha}</label>
+      <div>
+        <label htmlFor="id">id:</label>
+        <input
+          type="text"
+          id="id"
+          name="id"
+          defaultValue={id}
+          disabled={true}
+          readOnly={true}
+        ></input>
+      </div>
+      <div>
+        <label htmlFor="nombrelibro">Nombre del libro:</label>
+        <input
+          type="text"
+          id="nombrelibro"
+          name="nombrelibro"
+          value={nombrelibro}
+          onChange={handleInputChange}
+        ></input>
+        <label htmlFor="autor">Autor:</label>
+        <input
+          type="text"
+          id="autor"
+          name="autor"
+          value={autor}
+          onChange={handleInputChange}
+        ></input>
+      </div>
+      <div>
+        <label htmlFor="precio">Precio:</label>
+        <input
+          type="number"
+          id="precio"
+          name="precio"
+          value={precio}
+          onChange={handleInputChange}
+        ></input>
+        <label htmlFor="cantidad">Cantidad:</label>
+        <input
+          type="number"
+          id="cantidad"
+          name="cantidad"
+          value={cantidad}
+          onChange={handleInputChange}
+        ></input>
+      </div>
+      <div>
+        <label htmlFor="fecha">Fecha:</label>
+        <input
+          type="text"
+          id="fecha"
+          name="fecha"
+          defaultValue={fecha}
+          readOnly={true}
+        ></input>
+      </div>
       <br />
       <button type="submit">Submit</button>
     </Form>
