@@ -7,8 +7,8 @@ export default function InsertLibro() {
   return (
     <>
       <Header />
-      {/*<LibroForm />*/}
-      <FormTest />
+      <LibroForm />
+      {/*<FormTest />*/}
     </>
   );
 }
