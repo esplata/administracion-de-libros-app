@@ -34,7 +34,7 @@ const router = createBrowserRouter([
     children: [
       {
         path: "form",
-        Component: FormTest,
+        Component: InsertLibro,
       },
       {
         path: "submit",
