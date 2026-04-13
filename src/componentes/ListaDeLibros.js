@@ -3,6 +3,7 @@ import React from "react";
 import Header from "./Header";
 
 function ListaDeLibros() {
+  //TODO: Bisogna creare il componente per leggere tutti i record dentro del database.
   return (
     <>
       <Header />
