@@ -14,7 +14,6 @@ export default function ListaDeLibros() {
   const listaLibri = useLoaderData();
   const [libro, setLibro] = useState(listaLibri);
 
-  //TODO: Bisogna creare il componente per leggere tutti i record dentro del database.
   return (
     <>
       <Header />
