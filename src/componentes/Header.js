@@ -16,7 +16,7 @@ function Header() {
             </NavLink>
           </li>
           <li>
-            <NavLink to="/add/form" className="link" activeclassname="active">
+            <NavLink to="/add" className="link" activeclassname="active">
               Agrega Libro
             </NavLink>
           </li>
