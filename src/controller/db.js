@@ -1,22 +1,15 @@
 //const nano = require("nano");
-require("dotenv").config();
+// require("dotenv").config();
 
 const PouchDB = require("pouchdb").default;
 //import PouchDB from "pouchdb";
 
-// const {
-//   dbAdmin,
-//   dbAdminPwd,
-//   dbUrl,
-//   dbUser,
-//   dbUserPwd,
-//   dbName,
-// } = require("./environment");
+const { dbAdmin, dbAdminPwd, dbUrl, dbName } = require("./environment");
 
-const dbAdmin = process.env.DB_ADMIN;
-const dbAdminPwd = process.env.DB_ADMIN_PASSWORD;
-const dbUrl = process.env.DB_URL;
-const dbName = process.env.DB_NAME;
+// const dbAdmin = process.env.DB_ADMIN;
+// const dbAdminPwd = process.env.DB_ADMIN_PASSWORD;
+// const dbUrl = process.env.DB_URL;
+// const dbName = process.env.DB_NAME;
 
 // const db = new pouchDB(
 //   `http://${process.env.DB_ADMIN}:${process.env.DB_ADMIN_PASSWORD}@${process.env.DB_URL}/${process.env.DB_NAME}`,
