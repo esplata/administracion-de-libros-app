@@ -1,11 +1,13 @@
 import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import Principal from "../componentes/Principal";
-import AgregaLibro from "../componentes/AgregaLibro";
+//import AgregaLibro from "../componentes/AgregaLibro";
 import InsertLibro from "../componentes/InsertLibro";
-import ListaDeLibros from "../componentes/ListaDeLibros";
+import ListaDeLibros, {
+  loader as librosLoader,
+} from "../componentes/ListaDeLibros";
 import ErrorPage from "../componentes/ErrorPage";
-import FormTest from "../componentes/FormTest";
+//import FormTest from "../componentes/FormTest";
 
 async function actionSubmit({ params, request }) {
   try {
@@ -28,19 +30,11 @@ const router = createBrowserRouter([
   {
     path: "/lista",
     Component: ListaDeLibros,
+    loader: librosLoader,
   },
   {
     path: "/add",
-    children: [
-      {
-        path: "form",
-        Component: InsertLibro,
-      },
-      {
-        path: "submit",
-        action: actionSubmit,
-      },
-    ],
+    Component: InsertLibro,
   },
 ]);
 
