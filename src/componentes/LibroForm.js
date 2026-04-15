@@ -1,11 +1,11 @@
 import genDate from "../utils/genDate";
-import React, { useState } from "react";
-import { Form } from "react-router-dom";
+import React, { useState, navigate } from "react";
+import { Form, redirect } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 const libros = require("../controller/libros");
 
 export default function LibroForm() {
-  // definiamo il oggetto libro
+  // Define te Libro OBJECT
   const initialLibro = {
     id: uuidv4(),
     nombrelibro: "",
@@ -14,24 +14,40 @@ export default function LibroForm() {
     cantidad: 0,
     fecha: 0,
   };
+
   const [statoLibro, setStatoLibro] = useState(initialLibro);
 
   initialLibro.fecha = genDate();
 
   async function scriviDati(data) {
-    //TODO: Devi aggiungere un campo: il campo che definisce la "tabella" --> "type": "libri".
-    let ritorno;
+    /* This function writes phisically the record
+     * in the database, if its exists.
+     */
+    let valueBack;
+    /* We define a new object
+     * tabella
+     * this object will contain tha "name" of the table
+     * seen that in couchDB we don't have
+     * "collections" like in mongoDB
+     * or "tables" like in SQL
+     */
+
+    const tabella = { type: "books" };
+    // We add the new object to the recived
+    // to be write record..
+
+    data = { ...data, ...tabella };
 
     try {
       const result = await libros.add(data);
-      ritorno = await result;
-      if (ritorno.ok) {
-        ritorno = true;
+      valueBack = await result;
+      if (valueBack.ok) {
+        valueBack = true;
       }
     } catch (error) {
-      ritorno = error;
+      valueBack = error;
     }
-    return ritorno;
+    return valueBack;
   }
 
   function onSubmitAction(e) {
@@ -39,51 +55,55 @@ export default function LibroForm() {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formValue = Object.fromEntries(formData);
-    console.log(formValue);
     try {
       risultato = scriviDati(formValue);
+      if (!risultato) {
+        return redirect("/error?errMsg=" + risultato.message);
+      }
     } catch (e) {
-      risultato = e;
+      return redirect("/error?errMsg=" + e.message);
     }
-    console.log("il valore di ritorno riportato é: ", risultato);
     setStatoLibro(initialLibro);
+    redirect("/");
+    //    navigate("/");
   }
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setStatoLibro((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
-  };
-  const { id, nombrelibro, autor, precio, cantidad, fecha } = statoLibro;
-
-  // const handleInputChange = (event) => {
-  //   const { name, value } = event.target;
-  //   switch (name) {
-  //     case "cantidad":
-  //       if (value === "" || parseInt(value) === +value) {
-  //         setStatoLibro((statoLibro) => ({
-  //           ...statoLibro,
-  //           [name]: value,
-  //         }));
-  //       }
-  //       break;
-  //     case "precio":
-  //       if (value === "" || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
-  //         setStatoLibro((statoLibro) => ({
-  //           ...statoLibro,
-  //           [name]: value,
-  //         }));
-  //       }
-  //       break;
-  //     default:
-  //       setStatoLibro((prev) => ({
-  //         ...prev,
-  //         [name]: value,
-  //       }));
-  //   }
+  // const handleInputChange = (e) => {
+  //   const { name, value } = e.target;
+  //   setStatoLibro((prev) => ({
+  //     ...prev,
+  //     [name]: value,
+  //   }));
   // };
+
+  const handleInputChange = (event) => {
+    const { name, value } = event.target;
+    switch (name) {
+      case "cantidad":
+        if (value === "" || parseInt(value) === +value) {
+          setStatoLibro((prev) => ({
+            ...prev,
+            [name]: value,
+          }));
+        }
+        break;
+      case "precio":
+        if (value === "" || value.match(/^\d{1,}(\.\d{0,2})?$/)) {
+          setStatoLibro((prev) => ({
+            ...prev,
+            [name]: value,
+          }));
+        }
+        break;
+      default:
+        setStatoLibro((prev) => ({
+          ...prev,
+          [name]: value,
+        }));
+    }
+  };
+
+  const { id, nombrelibro, autor, precio, cantidad, fecha } = statoLibro;
 
   return (
     <Form onSubmit={onSubmitAction}>

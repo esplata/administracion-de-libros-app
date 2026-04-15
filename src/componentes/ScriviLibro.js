@@ -3,7 +3,6 @@ const libros = require("../controller/libros");
 async function ScriviLibro({ params, request }) {
   const formData = await request.formData();
 
-  console.log("I dati ottenuti sono: ", formData);
   try {
     //const response = await libros.add(formData);
     return { success: true };
